@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/item_vp_main_cardview_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false" android:orientation="horizontal">
+
+    <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" android:id="@+id/item_vp_main_cardview_detailview"
+            android:background="#EAEAEA" android:translationY="0dp">
+
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/item_vp_main_cardview_detailtitle"
+                    android:textColor="#000000"/>
+        </FrameLayout>
+    </RelativeLayout>
+    <RelativeLayout
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent" android:background="#FFFFFF"
+            android:id="@+id/item_vp_main_cardview_rl_main">
+
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_marginBottom="15dp" android:layout_marginTop="15dp"
+                android:layout_marginStart="20dp" android:layout_marginEnd="20dp">
+
+            <TextView
+                    android:id="@+id/item_vp_main_cardview_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:shadowColor="#80000000"
+                    android:shadowRadius="4"
+                    android:textSize="18sp"
+                    android:textColor="#000000"
+                    android:lineSpacingExtra="6sp"
+                    tools:text="title" android:layout_marginBottom="6dp"
+                    android:layout_gravity="top"/>
+            <TextView
+                    android:id="@+id/item_vp_main_cardview_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    tools:text="date" android:layout_gravity="bottom"/>
+            <ImageView
+                    android:id="@+id/item_vp_main_cardview_thumb"
+                    android:layout_width="75dp"
+                    android:scaleType="centerCrop"
+                    android:layout_height="75dp" android:layout_gravity="right|center_vertical"/>
+        </FrameLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
