@@ -16,7 +16,7 @@
 
         <com.example.sunginhong.sideproject_01.Main_CustomViewPager
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="500dp"
                 android:id="@+id/vp"
                 android:nestedScrollingEnabled="false"
                 android:layout_alignParentLeft="true"

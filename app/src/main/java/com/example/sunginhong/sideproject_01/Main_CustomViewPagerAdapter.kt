@@ -27,6 +27,7 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
     private val mInflater: LayoutInflater
     private val mMyViewPool: Pools.SimplePool<View>
     private val vpSize = 0.8f
+    private var itemDeatilHeight = 0f
     var item_vp_main_cardview_detailrl_Array = arrayOfNulls<View>(100)
 
     init {
@@ -75,6 +76,7 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
         item_vp_main_cardview_rl_main.setBackgroundColor(Color.parseColor(userList[position].color))
 
         item_vp_main_cardview_detailrl.id = position
+        Handler().postDelayed({ itemDeatilHeight = item_vp_main_cardview_detailrl.height.toFloat() },0)
         item_vp_main_cardview_detailrl_Array[position] = item_vp_main_cardview_detailrl
         item_vp_main_cardview_detailtitle.text = "This letter was first introduced in the United Kingdom and has been good luck to the recipient every year, and this letter to you now has to leave you within four days. Copying is also recommended. It may be a black superstition, but it is true. In the UK, a man named HGXWCH received this letter in 1930. He told the secretary to copy and send it. ."
 
@@ -103,12 +105,12 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
         MainActivity.mainVp!!.currentItem = view.id
 
         if (clickDetailView!!.y == 0.0f){
-            Utils_Animation.TransAnim(clickDetailView!!, 0f, 0f, 0f, MainActivity.vpHeight.toFloat(), 400)
+            Utils_Animation.TransAnim(clickDetailView!!, 0f, 0f, 0f, itemDeatilHeight, 400)
 
             Handler().postDelayed({ clickDetailView!!.y = 1.0f },0)
         }
         if (clickDetailView!!.y == 1.0f){
-            Utils_Animation.TransAnim(clickDetailView!!, 0f, 0f, MainActivity.vpHeight.toFloat(), 0f, 400)
+            Utils_Animation.TransAnim(clickDetailView!!, 0f, 0f, itemDeatilHeight, 0f, 400)
 
             Handler().postDelayed({ clickDetailView!!.y = 0.0f },0)
         }
