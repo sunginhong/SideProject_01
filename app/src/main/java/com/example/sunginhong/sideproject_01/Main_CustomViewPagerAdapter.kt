@@ -225,7 +225,7 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
     @SuppressLint("Range")
     private fun infoAnim_depth2(view: View) {
         val Button = item_vp_main_cardview_detailBtn_Array[view!!.id]
-//
+        
 //        Handler().postDelayed({
 //            dragState = false
 //            Utils_Animation.TransAnim(view!!, 0f, 0f, itemDeatilHeight, 0f, 0)
