@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             vp.setPadding(vp.width/vpPaddingRate, 0, vp.width/(vpPaddingRate*4), 0)
             vp.pageMargin = vp.width/(vpPaddingRate*4)
             vpHeight = vp.height
-            
+
         }, 20)
     }
 
