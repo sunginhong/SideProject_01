@@ -23,15 +23,11 @@ class Main_CustomViewPager(context: Context, attrs: AttributeSet) : ViewPager(co
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-
-            }
+        try {
+            return super.onInterceptTouchEvent(event)
+        } catch (e: IllegalArgumentException) {
+            return false
         }
-        return if (this.enabled!!) {
-            super.onInterceptTouchEvent(event)
-        } else false
-
     }
 
     fun setPagingEnabled(enabled: Boolean) {
