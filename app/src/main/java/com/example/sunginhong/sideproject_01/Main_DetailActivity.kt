@@ -23,6 +23,7 @@ class Main_DetailActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         finish()
+        Main_CustomViewPagerAdapter.detailBtnClick = false
     }
 
     override fun onPause() {

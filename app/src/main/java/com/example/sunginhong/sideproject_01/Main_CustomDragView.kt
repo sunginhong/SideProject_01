@@ -7,9 +7,7 @@ import android.widget.RelativeLayout
 
 
 class Main_CustomDragView : RelativeLayout {
-
     companion object {
-
     }
 
     private var RelativeLayoutListener: RelativeLayout? = null

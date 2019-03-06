@@ -25,6 +25,8 @@ import android.util.Pair as UtilPair
 
 
 
+
+
 class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<Main_User_min>) :
     PagerAdapter(), View.OnClickListener, View.OnTouchListener {
 
@@ -35,11 +37,12 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
     private val mMyViewPool: Pools.SimplePool<View>
     private val vpSize = 0.8f
     private var itemDeatilHeight = 0f
+    var item_vp_main_cardview_rl_Array = arrayOfNulls<View>(100)
     var item_vp_main_cardview_detailrl_Array = arrayOfNulls<View>(100)
     var item_vp_main_cardview_detailBtn_Array = arrayOfNulls<View>(100)
 
     private var dragState = false
-    private var dragChange = false
+    private var dragViewChange = false
     private var touchStartX: Float = 0.toFloat()
     private var touchStartY: Float = 0.toFloat()
     private var touchMoveX: Float = 0.toFloat()
@@ -55,6 +58,7 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
         items.add(item)
         notifyDataSetChanged()
     }
+
 
     override fun getCount(): Int {
         return userList.size
@@ -82,12 +86,18 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
         val item_vp_main_cardview_detailbutton = view.findViewById(R.id.item_vp_main_cardview_detailbutton) as Button
 
         item_vp_main_cardview_rl.id = position
-        item_vp_main_cardview_rl.setOnClickListener(this)
-        item_vp_main_cardview_rl.setOnTouchListener(this)
+        item_vp_main_cardview_rl_Array[position] = item_vp_main_cardview_rl
+        item_vp_main_cardview_rl_main.id = position
+        item_vp_main_cardview_rl_main.setOnClickListener(this)
+        item_vp_main_cardview_rl_main.setOnTouchListener(this)
         item_vp_main_cardview_detailBtn_Array[position] = item_vp_main_cardview_detailbutton
+
         item_vp_main_cardview_detailbutton.setOnClickListener {
             if(item_vp_main_cardview_detailbutton.alpha == 2.0f){
+                detailBtnClick = true
                 infoAnim_depth2(view)
+            } else {
+                infoAnim_depth1(view!!, true)
             }
         }
 
@@ -119,11 +129,13 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
     }
 
     companion object {
+        var detailBtnClick = false
         private val MAX_POOL_SIZE = 10
     }
 
     override fun onClick(view: View) {
         val clickDetailView = item_vp_main_cardview_detailrl_Array[view.id]
+        val Button = item_vp_main_cardview_detailBtn_Array[view!!.id]
 
         mScroller.isAccessible = true
         mScroller.set(MainActivity.mainVp, CustomScroller(context, DecelerateInterpolator(1.5.toFloat()),400))
@@ -138,14 +150,16 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
     override fun onTouch(view: View?, event: MotionEvent?): Boolean {
         var action = event!!.action
         var dragView = view
+        val cardView = item_vp_main_cardview_rl_Array[view!!.id]
         val innerView = item_vp_main_cardview_detailrl_Array[view!!.id]
         val Button = item_vp_main_cardview_detailBtn_Array[view!!.id]
+        val DRAGMOVE_RATE = 7.5f
 //        disallowTouch(dragView!!.parent, true)
         when (action) {
             MotionEvent.ACTION_DOWN -> {
                 handler.removeCallbacks(runnable)
-                touchStartX = dragView!!.x - event.rawX
-                touchStartY = dragView!!.y - event.rawY
+                touchStartX = cardView!!.x - event.rawX
+                touchStartY = cardView!!.y - event.rawY
                 lastAction = MotionEvent.ACTION_DOWN
             }
             MotionEvent.ACTION_MOVE ->{
@@ -154,34 +168,42 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
                 touchMoveX = event.rawX + touchStartX
                 touchMoveY = event.rawY + touchStartY
 //                dragView!!.x = touchMoveX
-                dragView!!.y = touchMoveY
+                cardView!!.y = touchMoveY
                 lastAction = MotionEvent.ACTION_MOVE
-                if (-dragView!!.y > dragView.height/4){
-                    dragView.y = -(dragView.height/4).toFloat()
-                    touchMoveY = dragView.y
+                if (-cardView!!.y > cardView.height/DRAGMOVE_RATE){
+                    cardView.y = -(cardView.height/DRAGMOVE_RATE).toFloat()
+                    touchMoveY = cardView.y
                 }
-                if (dragView!!.y > dragView.height/4){
-                    dragView.y = (dragView.height/4).toFloat()
-                    touchMoveY = dragView.y
+                if (cardView!!.y > cardView.height/DRAGMOVE_RATE){
+                    cardView.y = (cardView.height/DRAGMOVE_RATE).toFloat()
+                    touchMoveY = cardView.y
                 }
             }
             MotionEvent.ACTION_UP ->{
                 lastAction = MotionEvent.ACTION_UP
                 if (dragState){
-                    if ( -dragView!!.y >= dragView.height/4 ){
+                    if ( -cardView!!.y >= cardView!!.height/DRAGMOVE_RATE ){
                         infoAnim_depth1(dragView!!, true)
                         if (Button!!.alpha == 2.0f){ infoAnim_depth2(dragView) }
-                    } else if (-dragView!!.y >= 0){
-                        infoAnim_depth1(dragView!!, false)
+                    } else if (-cardView!!.y >= 0){
+                        if (Button!!.alpha == 0.0f){
+                            infoAnim_depth1(dragView!!, false)
+                        } else {
+                            infoAnim_depth1(dragView!!, true)
+                        }
                     }
-                    if ( dragView!!.y >= dragView.height/4 ){
+                    if ( cardView!!.y >= cardView.height/DRAGMOVE_RATE ){
                         infoAnim_depth1(dragView!!, true)
                         if (Button!!.alpha == 2.0f){ infoAnim_depth2(dragView) }
-                    } else if (dragView!!.y >= 0){
-                        infoAnim_depth1(dragView!!, false)
+                    } else if (cardView!!.y >= 0){
+                        if (Button!!.alpha == 0.0f){
+                            infoAnim_depth1(dragView!!, false)
+                        } else {
+                            infoAnim_depth1(dragView!!, true)
+                        }
                     }
-                    dragView.y = 0f
-                    Utils_Animation.TransAnim(dragView, 0f, 0f, touchMoveY, 0f, 400)
+                    cardView.y = 0f
+                    Utils_Animation.TransAnim(cardView, 0f, 0f, touchMoveY, 0f, 400)
                     handler.postDelayed(runnable, 100)
                 }
             }
@@ -204,7 +226,6 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
         if (View!!.y == 0.0f && boolean){
             Utils_Animation.TransAnim(View!!, 0f, 0f, 0f, itemDeatilHeight, 400)
             Button!!.alpha = 1f
-            Utils_Animation.AlphaAnim(Button!!, 0f, 1f, 200)
             Handler().postDelayed({
                 View!!.y = itemDeatilHeight
                 Button!!.alpha = 2f
@@ -214,7 +235,6 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
         if (View!!.y == itemDeatilHeight && boolean){
             View!!.y = 0f
             Utils_Animation.TransAnim(View!!, 0f, 0f, itemDeatilHeight, 0f, 400)
-            Utils_Animation.AlphaAnim(Button!!, 1f, 0f, 200)
             Handler().postDelayed({
                 Utils_Animation.TransAnim(View!!, 0f, 0f, 0f, 0f, 0)
                 Button!!.alpha = 0f
@@ -224,17 +244,25 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
 
     @SuppressLint("Range")
     private fun infoAnim_depth2(view: View) {
-//        val Button = item_vp_main_cardview_detailBtn_Array[view!!.id]
-//        Handler().postDelayed({
-//            dragState = false
-//            Utils_Animation.TransAnim(view!!, 0f, 0f, itemDeatilHeight, 0f, 0)
-//            Handler().postDelayed({
-//                view!!.y = 0.0f
-//                Button!!.alpha = 2f},0)
-//        },400)
+        val View = item_vp_main_cardview_detailrl_Array[view!!.id]
+        val Button = item_vp_main_cardview_detailBtn_Array[view!!.id]
+
+        if (!detailBtnClick){
+            Utils_Animation.TransAnim(View!!, 0f, 0f, itemDeatilHeight, itemDeatilHeight, 0)
+        } else {
+            Utils_Animation.TransAnim(View!!, 0f, 0f, 0f, 0f, 0)
+        }
+
+        Button!!.alpha = 1f
+        Handler().postDelayed({
+            View!!.y = itemDeatilHeight
+            Button!!.alpha = 2f
+            Utils_Animation.TransAnim(View!!, 0f, 0f, 0f, 0f, 0)
+        },400)
 
         val intent = Intent(view.context, Main_DetailActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         view.context.startActivity(intent)
     }
+
 }
