@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private  val vpPaddingRate = 6
     companion object {
+        var mainActivity : MainActivity? = null
         var mainVp: ViewPager? = null
         var mScroller = ViewPager::class.java.getDeclaredField("mScroller")
         var Vp_CardView_Array = arrayOfNulls<ImageView>(0)
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun init (ctx: Context) {
+        mainActivity = this
         val screenSize = getScreenSize(this)
         screenWidth = screenSize.x
         screenHeight = screenSize.y
@@ -53,8 +55,7 @@ class MainActivity : AppCompatActivity() {
             vp.pageMargin = vp.width/(vpPaddingRate*4)
             vpHeight = vp.height
 
-        }, 20)
+        }, 100)
     }
-
 
 }

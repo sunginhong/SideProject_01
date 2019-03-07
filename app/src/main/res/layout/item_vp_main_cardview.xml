@@ -26,7 +26,7 @@
                 android:layout_marginStart="20dp" android:layout_marginEnd="20dp">
             <Button
                     android:text="Button"
-                    android:fontFamily="@font/nanumgothicregular"
+                    android:fontFamily="@font/nanumgothic_family"
                     android:alpha="0"
                     android:background="#00BF50"
                     android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:layout_gravity="bottom"/>
             <TextView
                     android:text="TextView"
-                    android:fontFamily="@font/nanumgothicregular"
+                    android:fontFamily="@font/nanumgothic_family"
                     android:layout_width="wrap_content"
                     android:layout_height="100dp" android:id="@+id/item_vp_main_cardview_detailtitle"
                     android:layout_marginTop="15dp"
@@ -58,7 +58,7 @@
 
             <TextView
                     android:id="@+id/item_vp_main_cardview_title"
-                    android:fontFamily="@font/nanumgothicbold"
+                    android:fontFamily="@font/nanumgothic_family"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:shadowColor="#80000000"

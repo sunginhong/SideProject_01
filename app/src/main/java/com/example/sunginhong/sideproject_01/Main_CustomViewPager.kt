@@ -1,10 +1,10 @@
 package com.example.sunginhong.sideproject_01
 
 import android.content.Context
+import android.support.v4.view.MotionEventCompat
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
-
 
 
 class Main_CustomViewPager(context: Context, attrs: AttributeSet) : ViewPager(context, attrs) {
@@ -23,12 +23,33 @@ class Main_CustomViewPager(context: Context, attrs: AttributeSet) : ViewPager(co
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
+
+        val action = event.action and MotionEventCompat.ACTION_MASK
+
+        when (action) {
+
+            MotionEvent.ACTION_DOWN -> {
+
+            }
+            MotionEvent.ACTION_MOVE -> {
+                Main_CustomViewPagerAdapter.viewPosReset(MainActivity.mainVp!!.currentItem)
+            }
+        }
+
         try {
             return super.onInterceptTouchEvent(event)
         } catch (e: IllegalArgumentException) {
             return false
         }
+        return super.onInterceptTouchEvent(event)
     }
+//    override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
+//        try {
+//            return super.onInterceptTouchEvent(event)
+//        } catch (e: IllegalArgumentException) {
+//            return false
+//        }
+//    }
 
     fun setPagingEnabled(enabled: Boolean) {
         this.enabled = enabled

@@ -10,7 +10,7 @@
              tools:context="com.example.sunginhong.sideproject_01.MainActivity">
 
     <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false">
 
@@ -19,21 +19,32 @@
                 android:layout_height="wrap_content" android:layout_gravity="center_vertical"
                 android:clipChildren="false">
 
-            <com.example.sunginhong.sideproject_01.Main_CustomViewPager
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="375dp"
-                    android:id="@+id/vp"
-                    android:nestedScrollingEnabled="false"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" android:layout_gravity="center_vertical"
-                    android:clipChildren="false" android:clipToPadding="false"/>
-            <android.support.design.widget.TabLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:tabBackground="@drawable/tab_selector"
-                    app:tabGravity="center"
-                    app:tabIndicatorHeight="0dp"
-                    android:id="@+id/tab_layout" android:layout_gravity="bottom" android:clipChildren="false"/>
+                    android:layout_height="wrap_content" android:clipChildren="false">
+                <TextView
+                        android:text="아이템을 선택해주세요."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/textView2"
+                        android:layout_marginBottom="20dp" android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/nanumgothic_family"/>
+                <com.example.sunginhong.sideproject_01.Main_CustomViewPager
+                        android:layout_width="match_parent"
+                        android:layout_height="330dp"
+                        android:id="@+id/vp"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" android:layout_gravity="center_vertical"
+                        android:clipChildren="false" android:clipToPadding="false"/>
+                <android.support.design.widget.TabLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabBackground="@drawable/tab_selector"
+                        app:tabGravity="center"
+                        app:tabIndicatorHeight="0dp"
+                        android:id="@+id/tab_layout" android:layout_gravity="bottom" android:clipChildren="false"/>
+            </LinearLayout>
         </FrameLayout>
 
     </FrameLayout>
