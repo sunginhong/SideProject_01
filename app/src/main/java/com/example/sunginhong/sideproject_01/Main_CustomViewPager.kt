@@ -16,6 +16,19 @@ class Main_CustomViewPager(context: Context, attrs: AttributeSet) : ViewPager(co
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        val action = event.action and MotionEventCompat.ACTION_MASK
+        when (action) {
+
+            MotionEvent.ACTION_DOWN -> {
+
+            }
+            MotionEvent.ACTION_MOVE -> {
+                Main_CustomViewPagerAdapter.viewPosReset(MainActivity.mainVp!!.currentItem)
+            }
+            MotionEvent.ACTION_UP -> {
+
+            }
+        }
         return if (this.enabled!!) {
             super.onTouchEvent(event)
         } else false
@@ -32,7 +45,10 @@ class Main_CustomViewPager(context: Context, attrs: AttributeSet) : ViewPager(co
 
             }
             MotionEvent.ACTION_MOVE -> {
-                Main_CustomViewPagerAdapter.viewPosReset(MainActivity.mainVp!!.currentItem)
+//                Main_CustomViewPagerAdapter.viewPosReset(MainActivity.mainVp!!.currentItem)
+            }
+            MotionEvent.ACTION_UP -> {
+
             }
         }
 

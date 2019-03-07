@@ -177,12 +177,13 @@ class Main_CustomViewPagerAdapter(val context: Context, val userList:ArrayList<M
                 lastAction = MotionEvent.ACTION_DOWN
             }
             MotionEvent.ACTION_MOVE ->{
-                handler.removeCallbacks(runnable);
+                handler.removeCallbacks(runnable)
                 dragState = true
                 touchMoveX = event.rawX + touchStartX
                 touchMoveY = event.rawY + touchStartY
 //                dragView!!.x = touchMoveX
                 cardView!!.y = touchMoveY
+//                Log.d("ssss", "ssss"+touchMoveY)
                 lastAction = MotionEvent.ACTION_MOVE
                 if (-cardView!!.y > cardView.height/DRAGMOVE_RATE){
                     cardView.y = -(cardView.height/DRAGMOVE_RATE).toFloat()
